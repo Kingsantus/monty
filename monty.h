@@ -7,8 +7,6 @@
 #include <unistd.h>
 #include <ctype.h>
 
-extern int indicator;
-
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -39,12 +37,44 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void _push(stack_t **stack, unsigned int line_number);
-void _pall(stack_t **stack, unsigned int line_number);
-void read_file(char *filename, stack_t **stack);
-void _stack(stack_t **stack, unsigned int line_number);
-void free_node(stack_t *head);
-void error_exit(stack_t **stack);
-stack_t *add_node(stack_t **head, const int n);
+/**
+ * monty_s - representing the state of the interpreter
+ * @arg: Pointer to a char, representing the argument
+ * @file: Pointer to a FILE, representing the file
+ * @content: Pointer to a char
+ * lifi: Integer representing the mode (0 for stack, 1 for queue)
+ */
+typedef struct monty_s
+{
+	char *arg;
+	FILE *file;
+	char *content;
+	int lifi;
+}  monty_t;
+extern monty_t mont;
+
+/* prototype used for execution */
+void process_file(const char* filename);
+void _push(stack_t **head, unsigned int number);
+void _pall(stack_t **head, unsigned int number);
+void _pint(stack_t **head, unsigned int number);
+int execute(char *content, stack_t **head, unsigned int line_number, FILE *file);
+void free_stack(stack_t *head);
+void _pop(stack_t **head, unsigned int line_number);
+void _swap(stack_t **head, unsigned int line_number);
+void _add(stack_t **head, unsigned int line_number);
+void _nop(stack_t **head, unsigned int line_number);
+void _sub(stack_t **head, unsigned int line_number);
+void _div(stack_t **head, unsigned int line_number);
+void _mul(stack_t **head, unsigned int line_number);
+void _mod(stack_t **head, unsigned int line_number);
+void _pchar(stack_t **head, unsigned int line_number);
+void _pstr(stack_t **head, unsigned int line_number);
+void _rotl(stack_t **head, unsigned int line_number);
+void _rotr(stack_t **head, __attribute__((unused)) unsigned int line_number);
+void addnode(stack_t **head, int n);
+void addqueue(stack_t **head, int n);
+void _queue(stack_t **head, unsigned int line_number);
+void _stack(stack_t **head, unsigned int line_number);
 
 #endif
