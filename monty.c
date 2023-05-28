@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdio.h>
 
 monty_t mont = {NULL, NULL, NULL, 0};
 /**
@@ -6,16 +7,16 @@ monty_t mont = {NULL, NULL, NULL, 0};
  * @filename: The name of the file to process
  * Returns: None
  */
-void process_file(const char* filename)
+void process_file(const char *filename)
 {
-	char *content;
+	char buffer[BUFFER_SIZE];
 	FILE *file;
-	size_t size = 0;
+	size_t size = BUFFER_SIZE;
 	ssize_t read_line = 1;
 	stack_t *stack = NULL;
 	unsigned int line_number = 0;
 
-	file = fopen(filename, 'r');
+	file = fopen(filename, "r");
 	mont.file = file;
 	if (!file)
 	{
@@ -24,17 +25,16 @@ void process_file(const char* filename)
 	}
 	while (read_line > 0)
 	{
-		content = NULL;
-		read_line = getline(&content, &size, file);
-		mont.content = content;
+		read_line = fread(buffer, sizeof(char), size, file);
+		mont.content = buffer;
 		line_number++;
 
 		if (read_line > 0)
 		{
-			execute(content, &stack, line_number, file);
+			execute(buffer, &stack, line_number, file);
 		}
-		free(content);
 	}
+
 	free_stack(stack);
 	fclose(file);
 }
@@ -46,15 +46,17 @@ void process_file(const char* filename)
  *
  * Returns: 0 on successful execution
  */
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
+	const char *filename;
+
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
-	const char* filename = argv[1];
+	filename = argv[1];
 	process_file(filename);
 
 	return (0);

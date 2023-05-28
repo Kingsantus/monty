@@ -14,7 +14,7 @@ void _sub(stack_t **head, unsigned int line_number)
 	aux = *head;
 	for (count = 0; aux != NULL; count++)
 		aux = aux->next;
-	if (node < 2)
+	if (count < 2)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
 		fclose(mont.file);
@@ -97,7 +97,7 @@ void _mul(stack_t **head, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	h = *head;
-	aux = h->next-n * h->n;
+	aux = h->next->n * h->n;
 	h->next->n = aux;
 	*head = h->next;
 	free(h);
@@ -138,7 +138,7 @@ void _mod(stack_t **head, unsigned int line_number)
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	aux = h->next-> % h->n;
+	aux = h->next->n % h->n;
 	h->next->n = aux;
 	*head = h->next;
 	free(h);

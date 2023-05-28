@@ -27,7 +27,7 @@ void _pchar(stack_t **head, unsigned int line_number)
 		free(mont.content);
 		free_stack(*head);
 		exit(EXIT_FAILURE);
-        }
+	}
 	printf("%c\n", h->n);
 }
 
@@ -40,13 +40,13 @@ void _pchar(stack_t **head, unsigned int line_number)
  */
 void _pstr(stack_t **head, unsigned int line_number)
 {
-	stack *h;
+	stack_t *h;
 	(void) line_number;
 
 	h = *head;
 	while (h)
 	{
-		if (h->n > 127 || h->n <=0)
+		if (h->n > 127 || h->n <= 0)
 			break;
 		printf("%c", h->n);
 		h = h->next;

@@ -15,7 +15,7 @@ void _push(stack_t **head, unsigned int line_number)
 		{
 			j++;
 		}
-		for(; mont.arg[j] != '\0'; j++)
+		for (; mont.arg[j] != '\0'; j++)
 		{
 			if (mont.arg[j] > 59 || mont.arg[j] < 48)
 				flag = 1;
@@ -101,5 +101,6 @@ void _pint(stack_t **head, unsigned int line_number)
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
+
 	printf("%d\n", (*head)->n);
 }

@@ -25,7 +25,7 @@ void _swap(stack_t **head, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	h = *head;
-	aux h->n;
+	aux = h->n;
 	h->n = h->next->n;
 	h->next->n = aux;
 }

@@ -52,6 +52,8 @@ typedef struct monty_s
 	int lifi;
 }  monty_t;
 extern monty_t mont;
+#define BUFFER_SIZE 1024
+
 
 /* prototype used for execution */
 void process_file(const char* filename);

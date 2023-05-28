@@ -33,21 +33,26 @@ int execute(char *content, stack_t **stack, unsigned int line_number, FILE *file
 	};
 	unsigned int i = 0;
 	char *op;
+	char *arg;
+	int executed = 0;
 
-	op = strtok(content, "\n\t");
+	op = strtok(content, "\t\n");
 	if (op && op[0] == '#')
 		return (0);
-	mont.arg = strtok(NULL, "\n\t");
-	while (opst[i].opcode && op)
+	arg = strtok(NULL, "\t\n");
+	mont.arg = (arg != NULL) ? arg : "";
+
+	while (opst[i].opcode)
 	{
 		if (strcmp(op, opst[i].opcode) == 0)
 		{
 			opst[i].f(stack, line_number);
-			return (0);
+			executed = 1;
+			break;
 		}
 		i++;
 	}
-	if (op && opst[i].opcode == NULL)
+	if (!executed && op)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, op);
 		fclose(file);
